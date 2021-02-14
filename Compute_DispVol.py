@@ -5,27 +5,27 @@ from PricingAndCalibration import Pricing
 from PricingAndCalibration import FittingSpline
 
 
-DT = DateAndTime(from_date, until_date, force_matu=chosen_matu)
-DTi = DateAndTime(from_date, until_date, force_matu=chosen_matu, ital_rule=True)
-
-for udl_p in index_list + udl_list:
-    udl = udl_p[0]
-    isin = udl_p[3]
-    print(udl)
-
-    if isin[:2] == 'IT':
-        FS = FittingSpline(udl, DTi, folder1, folder2)
-    else:
-        FS = FittingSpline(udl, DT, folder1, folder2)
-
-    if FS.data_found:
-        FS.fit_all()
+# DT = DateAndTime(from_date, until_date, force_matu=chosen_matu)
+# DTi = DateAndTime(from_date, until_date, force_matu=chosen_matu, ital_rule=True)
+#
+# for udl_p in index_list + udl_list:
+#     udl = udl_p[0]
+#     isin = udl_p[3]
+#     print(udl)
+#
+#     if isin[:2] == 'IT':
+#         FS = FittingSpline(udl, DTi, folder1, folder2)
+#     else:
+#         FS = FittingSpline(udl, DT, folder1, folder2)
+#
+#     if FS.data_found:
+#         FS.fit_all()
 
 
 
 def pick_hour(df_d):
     i = df_d.Error.idxmin()
-    return(df.loc[i,:])
+    return(df.loc[i, :])
 
 def compute_dispvol(df_d):
     W = df_d.W.sum()
@@ -38,6 +38,8 @@ def compute_dispvol(df_d):
 matu = chosen_matu[0][:-2]
 # udl_dic = dict([(elt[0], (elt[1], elt[2])) for elt in udl_list])
 Leverage = 0.2
+
+# Put together
 
 df = pd.DataFrame()
 for udl_p in index_list + udl_list:
@@ -61,6 +63,8 @@ for udl_p in index_list + udl_list:
         df = df.append(df_udl)
 
 
+# Compute Disp Vol
+
 dW = pd.DataFrame(index_list + udl_list, columns=['udl', 'RefSpot', 'W', 'isin', 'info'])
 df = pd.merge(df, dW, left_on='udl', right_on='udl', how='left').set_index(df.index)
 df['W'] = df.apply(lambda x: 0 if x.udl == 'OESX' else x.W / 100 * (x.Spot / x.RefSpot), axis='columns')
@@ -69,10 +73,14 @@ df['DispVolask'] = df.apply(lambda x: x.W * x.ATFask ** 2, axis='columns')
 df = df.groupby(df.index, group_keys=False).apply(compute_dispvol)
 print(df)
 
-df = df.loc[df.W > 0.8*df.W.max()]
+# df = df.loc[df.W > 0.8*df.W.max()]
 
-x = df['ATFbid'].values
-y = df['DispVolbid'].values
+# Graph
+from_date='20200102'
+until_date='20200112'
+df = df[pd.Timestamp(from_date).date():pd.Timestamp(until_date).date()]
+x = ((df['ATFbid'] + df['ATFask'])/2).values
+y = ((df['DispVolbid'] + df['DispVolask'])/2).values
 dates = [elt.strftime('%m/%d') for elt in df.index.values]
 
 u = np.diff(x)

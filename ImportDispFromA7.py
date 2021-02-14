@@ -175,7 +175,7 @@ def build_options_list():
 
 a = datetime.datetime.now()  # time check
 
-for reference_date in DT.dates_list[::5]:
+for reference_date in DT.dates_list: #[::5]:
     print(reference_date)
 
     # retrieve all instruments (stocks the options) from A7
@@ -235,7 +235,7 @@ for reference_date in DT.dates_list[::5]:
             except:
                 print('\n\n\n fail for : {}, {}\n\n\n'.format(reference_date, udl))
 
-        df_orderbook.to_pickle(folder1 + '/Quotes_' + udl + '.pkl')
+            df_orderbook.to_pickle(folder1 + '/Quotes_' + udl + '.pkl')
 
         b = datetime.datetime.now()
         print(b - a)
