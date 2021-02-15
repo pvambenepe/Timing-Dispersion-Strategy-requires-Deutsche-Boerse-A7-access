@@ -1,5 +1,5 @@
-# Timing-Dispersion-Strategy-requires-Deutsche-Boerse-A7-access
---A simple way to know when to enter dispersion strategy--
+# Timing-Dispersion-Strategy-requires-Deutsche-Boerse-A7-access #
+## A simple way to know when to enter dispersion strategy ##
 
 A Dispersion Strategy is a way for option traders to take advantage of the premium in index implicit volatility compared to single stock's volatility.
 This premium comes from different flows in each asset class :
@@ -15,7 +15,7 @@ This is not how it is traded nowadays though, as varswaps are deemed too dangero
 
 The Dispersion Volatility measure is :
 
-Dispersion_Vol = ( Sum(i=1..n, W_i * ATF_i^2) - (1+Leverage) * ATF_index^2 ) / Normalisation_factor
+### Dispersion_Vol = ( Sum(i=1..n, W_i * ATF_i^2) - (1+Leverage) * ATF_index^2 ) / Normalisation_factor ###
 
 where
 
@@ -26,7 +26,7 @@ where
 - Normalisation_factor is a factor to apply to get a vega of 1 on the index so : 2 * (1+Leverage) * ATF_index
 
 
-Explanation :
+## Explanation : ##
 It is a measure of the price of a varswap dispersion strategy with a leverage on the index in order to target a vega neutral portfolio.
 
 This indicator can of course also be computed in a realized form instead of implicit, simply by inputing realized volatilities instead. 
@@ -36,7 +36,8 @@ PnL = Dispersion_Vol_Realized - Dispersion_Vol_Implicit
 Consequently, the lower the implicit Dispersion_Vol, the higher the chances of positive reward.
 
 
-What we will be doing :
+## What we will be doing : ##
+
 Option traders know that when markets collapse, the index vol overshoots the vol of components which generates dispersion trade opportunities.
 Visually, this creates a clockwise patterns on a graph representing the Dispersion_Vol on the Y axis and the index implicit vol on the X axis in case of market stress :
 - First index vol rises and overshoots stock vol so the dispersion vol goes down -> the curve moves to right and lower.
@@ -45,7 +46,8 @@ Visually, this creates a clockwise patterns on a graph representing the Dispersi
 
 The goal of this git is show how to create this graph using Deutsche Boerse's A7 API.
 
-Here are some examples :
+
+## Here are some examples : ##
 
 
 March 2020 market meltdown :
