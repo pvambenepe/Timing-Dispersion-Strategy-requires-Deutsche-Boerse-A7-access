@@ -1,4 +1,4 @@
-# Timing-Dispersion-Strategy-requires-Deutsche-Boerse-A7-access #
+# Timing Dispersion Strategy (requires Deutsche Boerse A7 access) #
 ## A simple way to know when to enter dispersion strategy ##
 
 A Dispersion Strategy is a way for option traders to take advantage of the premium in index implicit volatility compared to single stock's volatility.
